@@ -34,16 +34,11 @@ function BoardRoomFeed() {
   const { privateKey } = useParams();
   const tags: string[][] = [["t", `aitc/polling/${userId}`]]
 
-  {/*
-   Key for replacing non characters in the private key
-    ? = /
-  */}
-  
-  // TODO: replace all sequenced characters with their appropriate counterparts
-  const encryptedPrivkey = privateKey?.replace(/1/g, 'a');
+  const encryptedPrivkey = privateKey?.replace(/p1L2u3S/g, '+' ).replace(/s1L2a3S4h/g, '/').replace(/e1Q2u3A4l/g, '=');
 
   console.log("user id", userId)
-  console.log("private key", encryptedPrivkey)
+  console.log("private key w/o specials: ", privateKey)
+  console.log("private key w/  specials: ", encryptedPrivkey)
 
   // create a relay pool
   useEffect(() => {
