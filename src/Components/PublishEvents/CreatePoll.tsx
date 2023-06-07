@@ -28,6 +28,8 @@ interface Props {
 
 export default function CreatePoll({ pool, tags, encryptedPrivkey, events, metadata }: Props) {
    const [input, setInput] = useState("");
+   const [imgInput, setImgInput] = useState("");
+
    const [image, setImage] = useState<UploadResult | null>(null);
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -39,11 +41,14 @@ export default function CreatePoll({ pool, tags, encryptedPrivkey, events, metad
       // }
 
       // Construct the event object
+      let result = input.concat(" ").concat(imgInput);
+      console.log(result);
+
       const _baseEvent = {
          kind: 1,
          created_at: Math.round(Date.now() / 1000),
          tags: tags,
-         content: input,
+         content: result,
          pubkey: getPublicKey(JSON.parse(CryptoJS.AES.decrypt(encryptedPrivkey, 'AITCSunrise').toString(CryptoJS.enc.Utf8))),
       } as UnsignedEvent;
 
@@ -62,6 +67,7 @@ export default function CreatePoll({ pool, tags, encryptedPrivkey, events, metad
             if (clearedInput) return;
             clearedInput = true;
             setInput("");
+            setImgInput("");
             setImage(null);
          });
        } catch (error) {
@@ -86,7 +92,7 @@ export default function CreatePoll({ pool, tags, encryptedPrivkey, events, metad
       console.log(image);
       // Perform operations with the selected image file
       setImage(image)
-      setInput(image.url!)
+      setImgInput(image.url!)
       console.log('Selected image:', selectedImage);
    }
 
